@@ -35,3 +35,12 @@ variable "ssh_key" {
   type        = string
   description = "public ssh key"
 }
+
+variable "vm_resources" {
+  type = map(number)
+  default = {
+    cores = 2
+    memory = 1
+    core_fraction = 5
+  }
+}
