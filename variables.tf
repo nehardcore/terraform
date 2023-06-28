@@ -33,8 +33,9 @@ variable "vpc_name" {
 
 variable "ssh_key" {
   type        = string
-  description = "public ssh key"
+  description = "public ssh key with user"
 }
+
 
 variable "vm_resources" {
   type = map(number)

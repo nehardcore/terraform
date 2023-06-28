@@ -1,11 +1,11 @@
-data "yandex_compute_image" "ubuntu" {
-  family = "ubuntu-2004-lts"
+resource "yandex_compute_disk" "storage_disks" {
+    count   = 3
+    size    = 1
 }
 
-resource "yandex_compute_instance" "web" {
-    depends_on = [ yandex_vpc_subnet.develop ]
-    count = 2
-    name = "web-${count.index + 1}"
+resource "yandex_compute_instance" "storage" {
+    depends_on = [ yandex_compute_disk.storage_disks ]
+    name = "storage"
     zone = var.default_zone
 
     resources {
@@ -14,6 +14,15 @@ resource "yandex_compute_instance" "web" {
         core_fraction   = var.vm_resources.core_fraction
     }
     
+    allow_stopping_for_update = true
+
+    dynamic secondary_disk{
+        for_each = yandex_compute_disk.storage_disks
+        content {
+          disk_id = secondary_disk.value.id
+        }
+    }
+
     boot_disk {
         initialize_params {
             image_id = data.yandex_compute_image.ubuntu.image_id
@@ -30,5 +39,4 @@ resource "yandex_compute_instance" "web" {
     metadata = {
       ssh_key = var.ssh_key
     }
-    
 }
