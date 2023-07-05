@@ -15,15 +15,6 @@ module "module_network_subnet" {
   source          = "./module_network_subnet"
   default_zone    = "ru-central1-a"
 }
-/*
-output "vpc_id" {
-  value = module.module_network_subnet.vpc_id
-}
-
-output "subnet_id" {
-  value = module.module_network_subnet.subnet_id
-}
-*/
 
 module "test-vm" {
   source          = "git::https://github.com/udjin10/yandex_compute_instance.git?ref=main"
