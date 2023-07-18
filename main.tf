@@ -1,16 +1,3 @@
-/*
-resource "yandex_vpc_network" "develop" {
-  name = var.vpc_name
-}
-resource "yandex_vpc_subnet" "develop" {
-  name           = var.vpc_name
-  zone           = var.default_zone
-  network_id     = yandex_vpc_network.develop.id
-  v4_cidr_blocks = var.default_cidr
-}
-*/
-
-
 module "module_network_subnet" {
   source          = "./module_network_subnet"
   default_zone    = "ru-central1-a"
@@ -30,10 +17,9 @@ module "test-vm" {
   public_ip       = true
   
   metadata = {
-      user-data          = data.template_file.cloudinit.rendered #Для демонстрации №3
+      user-data          = data.template_file.cloudinit.rendered
       serial-port-enable = 1
   }
-
 }
 
 data "template_file" "cloudinit" {
