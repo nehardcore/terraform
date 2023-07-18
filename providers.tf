@@ -2,6 +2,11 @@ terraform {
   required_providers {
     yandex = {
       source = "yandex-cloud/yandex"
+      version = ">= 0.94.0"
+    }
+    template = {
+      source  = "hashicorp/template"
+      version = "2.2.0"
     }
   }
   required_version = ">=0.13"
